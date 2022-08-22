@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ZenChart</title>
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+        window.options = {
+            cors_url: localStorage.getItem('options.cors_url'),
+            login_url: localStorage.getItem('options.login_url'),
+            logout_url: localStorage.getItem('options.logout_url'),
+            profile_url: localStorage.getItem('options.profile_url'),
+            account_url: localStorage.getItem('options.account_url'),
+            alert_url: localStorage.getItem('options.alert_url'),
+            storage_url: localStorage.getItem('options.storage_url'),
+            storage_api_version: localStorage.getItem('options.storage_api_version') || '1.1',
+            client_id: localStorage.getItem('options.client_id') || 'public',
+        }
+
+        const fetch_orig = window.fetch
+        window.fetch = function (r, o) {
+            const urlIndex = [
+                window.options.login_url,
+                window.options.logout_url,
+                window.options.profile_url,
+                window.options.account_url,
+                window.options.alert_url,
+                window.options.storage_url,
+            ].findIndex(url => r.startsWith(url))
+
+            if (urlIndex !== -1)
+                return fetch_orig.call(this, r, {
+                    ...o,
+                    credentials: 'include',
+                })
+
+            return fetch_orig.call(this, r, o)
+        }
+    </script>
+</head>
+
+<body>
+    <div id="chart"></div>
+    <script src="js/lib/chart/charting_library/charting_library.standalone.js"></script>
+    <script src="js/lib/ccxt/dist/ccxt.browser.min.js"></script>
+    <script src="js/lib/binance/dist/binanceapi.js"></script>
+    <script src="js/main.js" type="module"></script>
+</body>
+
+</html>
