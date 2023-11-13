@@ -285,7 +285,7 @@ export default {
 
 		onResultReadyCallback(
 			Object.keys(exchange.markets_by_id).filter(symbol => {
-				return symbol.indexOf(userInput) >= 0
+				return symbol.toLowerCase().indexOf(userInput.toLowerCase()) >= 0
 			}).map(symbol => {
 				const market = exchange.markets_by_id[symbol]
 
