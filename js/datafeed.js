@@ -475,7 +475,7 @@ export default {
 					short_name: parsed.symbol,
 					exchange: exchange.id.toUpperCase(),
 					original_name: item,
-					description: `${market.base} / ${market.quote}`,
+					description: `${market[0].base} / ${market[0].quote}`,
 					lp: ticker.last,
 					ask: ticker.ask,
 					bid: ticker.bid,
