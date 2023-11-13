@@ -41,7 +41,7 @@ function createWidget(config) {
 		auto_save_delay: 5,
 
 		disabled_features: ['dom_widget', 'trading_account_manager', 'chart_property_page_trading', 'order_panel'],
-		enabled_features: ['study_templates'],
+		enabled_features: ['study_templates', 'seconds_resolution'],
 
 		loading_screen: { backgroundColor: '#000000' },
 
