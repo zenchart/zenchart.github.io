@@ -88,7 +88,7 @@ const configurationData = {
 	supports_group_request: false,
 }
 
-ccxt.exchanges.forEach(exchangeId => {
+Object.keys(ccxt.exchanges).forEach(exchangeId => {
 	const exchange = getExchange(exchangeId)
 
 	configurationData.exchanges.push({
@@ -290,10 +290,10 @@ export default {
 				const market = exchange.markets_by_id[symbol]
 
 				return {
-					symbol: market.id,
-					full_name: market.id,
-					description: `${market.base} / ${market.quote}`,
-					ticker: exchange.id ? `${exchange.id.toUpperCase()}:${market.id}` : market.id,
+					symbol: market[0].id,
+					full_name: market[0].id,
+					description: `${market[0].base} / ${market[0].quote}`,
+					ticker: exchange.id ? `${exchange.id.toUpperCase()}:${market[0].id}` : market[0].id,
 					exchange: exchange.id.toUpperCase() || '',
 					type: exchange.type || 'crypto',
 				}
@@ -318,21 +318,21 @@ export default {
 		}
 
 		onSymbolResolvedCallback({
-			name: market.id,
+			name: market[0].id,
 			ticker: `${exchange.id.toUpperCase()}:${parsed.symbol}`,
-			description: market.base + ' / ' + market.quote,
+			description: market[0].base + ' / ' + market[0].quote,
 			type: exchange.type,
 			session: '24x7',
 			exchange: exchange.id.toUpperCase(),
 			listed_exchange: exchange.name,
 			timezone: 'UTC',
 			minmov: 1,
-			pricescale: Math.pow(10, decimalPlaces(market.precision?.price || 1)),
+			pricescale: Math.pow(10, decimalPlaces(market[0].precision?.price || 1)),
 			supported_resolutions: Object.keys(exchange.resolutions),
 			has_intraday: true,
 			has_daily: true,
 			has_weekly_and_monthly: true,
-			currency_code: market.quote,
+			currency_code: market[0].quote,
 			data_status: 'streaming',
 		})
 	},
