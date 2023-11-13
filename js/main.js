@@ -315,12 +315,11 @@ function createWidget(config) {
 					if (!result) return
 
 					activeChart.exportData({
-						from: new Date().getTime(),
 						includedStudies: [],
 					}).then(bars => {
 						fetch(options.alert_url, {
 							body: JSON.stringify({
-								current: bars.data[0][4],
+								current: bars.data[bars.data.length - 1][4],
 								price: activeChart.priceFormatter().format(level.price),
 								symbol: level.symbol,
 							}),
